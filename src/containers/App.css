@@ -1,6 +1,7 @@
 .App {
   text-align: center;
-  background-image: url('background.jpg'); 
+  /* background-image: url('../images/background.jpg');  */
+  background-color: lightblue;
   margin-top:-40px;
   background-size: 100%;
   height: 1000px;
@@ -9,4 +10,7 @@
 }
 .flex-container {
   background-color: transparent;
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
 }

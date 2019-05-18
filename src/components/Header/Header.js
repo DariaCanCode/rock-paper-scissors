@@ -4,7 +4,12 @@ import './Header.css';
 const Header =()=> {
     return(
         <div className="Header">
-            <h1> Rock, Paper, Scissors game! </h1>
+           <p className="title">  Welcome to </p>
+            <p>  
+                <span className="redColor"> Rock, </span>  
+                <span className="yellowColor"> Paper, </span> 
+                <span className="greenColor">  Scissors game! </span>  
+            </p>
         </div>
     )
 }

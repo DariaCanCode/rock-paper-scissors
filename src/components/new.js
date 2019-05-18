@@ -2,6 +2,9 @@ import React from 'react';
 import Options from './Options/Options'
 import Header from './Header/Header'; 
 import Message from './Message/Message'; 
+import PlayerScore from './PlayerScore/PlayerScore'; 
+import ComputerScore from './ComputerScore/ComputerScore'; 
+
 
 class New extends React.Component {
     constructor() {
@@ -17,7 +20,9 @@ class New extends React.Component {
             tieGame:false,
             test:true,
             generateComputerChoiceBool:false,
-            message:"Welcome to the game!"
+            message:"Welcome to the game!",
+            PlayerScoreBool:true,
+            computerScoreBool:true
           }
  
     }
@@ -47,62 +52,50 @@ class New extends React.Component {
         let resultArray = []; 
         resultArray.push(this.state.PlayerChoice) 
         resultArray.push(this.state.computerChoice) 
-
-        if(resultArray[0] === resultArray[1]) {
-            console.log("tie ")
+        let player = resultArray[0]; 
+        let computer = resultArray[1];
+        
+        if(player === computer) {
             this.setState({
-                playerScore: this.state.playerScore +1,
                 message:"tie"
               });
         }
-        switch(resultArray[0],resultArray[1]) {
+        switch(player,computer) {
           case 'rock','paper':
-            console.log(resultArray)
-            console.log("Paper wins rock!")
             this.setState({
-                playerScore: this.state.playerScore +1,
-                message:"Paper wins rock!"
+                computerScore: this.state.computerScore +1,
+                message: "Paper wins rock! Computer won!"
               });
          
             break;
           case 'rock','scissors':
-            console.log(resultArray)
-            console.log("Scissors wins paper!")
             this.setState({
                 playerScore: this.state.playerScore +1,
-                message:"Scissors wins paper!"
+                message:"Congrats!! Rock wins scissors!"
               });
             break;
-          case 'paper','rock':
-            console.log(resultArray)
-            console.log("Paper wins rock!") 
+          case 'paper','rock': 
             this.setState({
                 playerScore: this.state.playerScore +1,
-                message:"Paper wins rock!"
+                message:"Congrats! Paper wins rock!"
               });
             break;
           case 'paper', "scissors":
-            console.log(resultArray)
-            console.log("Rock wins scissors!")
             this.setState({
-                playerScore: this.state.playerScore +1,
-                message:"Rock wins scissors!"
+                computerScore: this.state.computerScore +1,
+                message:"Computer won! Scissors wins paper"
               });
             break;
           case 'scissors', "rock":
-            console.log(resultArray)
-            console.log("Rock wins scissors!")
             this.setState({
-                playerScore: this.state.playerScore +1,
-                message:"Rock wins scissors!"
+                computerScore : this.state.computerScore +1,
+                message:"Computer won! Rock wins scissors!"
               });
             break;
           case 'scissors', "paper":
-            console.log(resultArray)
-            console.log("Rock wins scissors!")
             this.setState({
                 playerScore: this.state.playerScore +1,
-                message:"Rock wins scissors!"
+                message:"Scissors wins paper!"
               });
             break;
           default:
@@ -111,7 +104,24 @@ class New extends React.Component {
 }
     render() {
         let message = null; 
+        let playerScore = null; 
+        let computerScore = null; 
 
+        if(this.state.computerScoreBool) {
+          computerScore = (
+            <div>
+              <ComputerScore choice={this.state.computerScore}> </ComputerScore>
+            </div>
+          )
+        }
+
+        if(this.state.PlayerScoreBool) {
+          playerScore = (
+            <div>
+              <PlayerScore choice={this.state.playerScore}> </PlayerScore>
+            </div>
+          )
+        }
         if(this.state.message) {
             message = (
               <div>
@@ -124,11 +134,16 @@ class New extends React.Component {
         return (
             <div>
                 <Header> </Header>
-                {message}
+                <div className="flex-container"> 
+                  {playerScore}
+                  {computerScore}
+                </div>
+                
+                {/* {message} */}
                 <div className="flex-container">
-                <Options click={() => this.playerMoved("paper")} choice="Paper" />
-                <Options click={() =>this.playerMoved("rock")} choice="Rock" />
-                <Options click={() =>this.playerMoved("scissors")} choice="Scissors" /> 
+                   <Options click={() => this.playerMoved("paper")} choice="Paper" style="Options Rock"/>
+                   <Options click={() =>this.playerMoved("rock")} choice="Rock" style="Options Paper"/>
+                   <Options click={() =>this.playerMoved("scissors")} choice="Scissors" style="Options Scissors" /> 
                 </div>
             </div>
         )}
